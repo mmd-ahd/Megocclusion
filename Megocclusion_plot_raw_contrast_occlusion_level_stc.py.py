@@ -11,7 +11,7 @@ stc_dir = os.path.join(dataset_dir, 'derivatives/occlusion_level_source_estimate
 subjects_dir = mne.datasets.sample.data_path() / 'subjects'  
 
 stcs_a, stcs_b = [], []  
-for sub_id in sub_ids:
+for sub_id in SUB_IDS:
     sub_bids_id = f'sub-{sub_id:02d}'  
     base_fname_a = os.path.join(stc_dir, sub_bids_id, 'meg', f'{sub_bids_id}_task-objectrecognition_occlusion-{OCCLUSION_LEVEL_A}_meg')
     base_fname_b = os.path.join(stc_dir, sub_bids_id, 'meg', f'{sub_bids_id}_task-objectrecognition_occlusion-{OCCLUSION_LEVEL_B}_meg')
