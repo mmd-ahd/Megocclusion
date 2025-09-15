@@ -3,15 +3,11 @@ import mne
 
 dataset_dir = 'Megocclusion'
 output_dir = 'fwd'
-os.makedirs(dataset_dir, output_dir, exist_ok=True)
-fwd_fname = os.path.join(output_dir, 'fsaverage-meg-ico4-fwd.fif')
+output_path = os.path.join(dataset_dir, output_dir)
+os.makedirs(output_path, exist_ok=True)
+fwd_fname = os.path.join(output_path, 'fsaverage-meg-ico4-fwd.fif')
 
 sample_raw_fname = 'subj04NN_sess01-0_tsss.fif'
-
-if not os.path.exists(sample_raw_fname):
-    raise FileNotFoundError(
-        f"The file '{sample_raw_fname}' was not found. "
-    )
 
 subjects_dir = mne.datasets.sample.data_path() / 'subjects'
 os.environ['SUBJECTS_DIR'] = str(subjects_dir)
