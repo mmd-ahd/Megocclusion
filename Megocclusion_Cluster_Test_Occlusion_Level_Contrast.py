@@ -4,7 +4,6 @@ import mne
 from scipy import stats
 from mne.stats import permutation_cluster_1samp_test
 
-# --- Analysis Parameters ---
 DERIVATIVES_DIR = 'Megocclusion/derivatives'
 SUB_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15]
 P_THRESHOLD = 0.05
