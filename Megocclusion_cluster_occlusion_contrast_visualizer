@@ -1,0 +1,62 @@
+import os
+import numpy as np
+import mne
+
+OCCLUSION_LEVEL_A = '60'
+OCCLUSION_LEVEL_B = '0'
+TMIN = 0.050
+TMAX = 0.150
+
+DERIVATIVES_DIR = 'Megocclusion/derivatives'
+P_THRESHOLD = 0.05
+results_dir = os.path.join(DERIVATIVES_DIR, 'cluster_results')
+subjects_dir = mne.datasets.sample.data_path() / 'subjects'
+
+tmin_ms = int(TMIN * 1000)
+tmax_ms = int(TMAX * 1000)
+
+results_fname = os.path.join(
+    results_dir,
+    f'results_contrast_{OCCLUSION_LEVEL_A}v{OCCLUSION_LEVEL_B}_{tmin_ms}-{tmax_ms}ms.npz'
+)
+
+if not os.path.exists(results_fname):
+    print(f"Results file not found: {results_fname}")
+else:
+    print(f"Plotting results from: {os.path.basename(results_fname)}")
+
+    results = np.load(results_fname, allow_pickle=True)
+    t_obs, clusters, cluster_pv = results['t_obs'], results['clusters'], results['cluster_pv']
+    
+    if 'fsave_vertices' in results:
+        fsave_vertices = results['fsave_vertices'].tolist()
+    else:
+        src = mne.setup_source_space(subject='fsaverage', spacing='ico4', subjects_dir=subjects_dir, add_dist=False)
+        fsave_vertices = [s['vertno'] for s in src]
+
+    good_clusters_idx = np.where(cluster_pv < P_THRESHOLD)[0]
+    
+    if not good_clusters_idx.any():
+        print("No significant clusters found to plot.")
+    else:
+        print(f"Found {len(good_clusters_idx)} significant clusters.")
+
+        stc_data = np.zeros((t_obs.shape[0], len(good_clusters_idx)))
+
+        for i, cluster_idx in enumerate(good_clusters_idx):
+            cluster_verts = clusters[cluster_idx][0]
+            stc_data[cluster_verts, i] = t_obs[cluster_verts].flatten()
+
+        stc = mne.SourceEstimate(stc_data, vertices=fsave_vertices,
+                                 tmin=0., tstep=1., subject='fsaverage')
+
+        brain = stc.plot(
+            hemi="both",
+            views="lateral",
+            subjects_dir=subjects_dir,
+            time_label="Significant Cluster #%d",
+            size=(800, 600),
+            smoothing_steps=10
+        )
+        
+        input()
