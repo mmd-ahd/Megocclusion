@@ -57,7 +57,7 @@ for sub in sub_ids:
             stc.apply_baseline(baseline=(None, 0))
 
         label_ts = mne.extract_label_time_course(
-            stcs, labels, inv_op['src'], mode='mean_flip', return_generator=False
+            stcs, labels, inv_op['src'], mode='pca_flip', return_generator=False
         )
         
         info = mne.create_info(ch_names=label_names, sfreq=epochs.info['sfreq'], ch_types='misc')
