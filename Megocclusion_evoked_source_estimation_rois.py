@@ -27,7 +27,7 @@ label_names = [label.name for label in labels]
 
 for sub in sub_ids:
     sub_bids_id = f'sub-{sub:02d}'
-    print(f"Processing {sub_bids_id}...")
+    print(f"Processing {sub_bids_id}")
 
     sub_epochs_dir = os.path.join(dataset_dir, sub_bids_id, 'meg')
     sub_inv_op_fname = os.path.join(inv_op_dir, sub_bids_id, f'{sub_bids_id}-inv.fif')
@@ -52,7 +52,7 @@ for sub in sub_ids:
         evoked = epochs.average()
 
         stc = mne.minimum_norm.apply_inverse(
-            evoked, inv_op, lambda2, method=method, pick_ori="normal"
+            evoked, inv_op, lambda2, method=method
         )
         
         stc.apply_baseline(baseline=(None, 0))
