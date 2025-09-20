@@ -61,6 +61,11 @@ for sub in sub_ids:
             stc, labels, inv_op['src'], mode='pca_flip', return_generator=False
         )
         
+        for i in range(len(label_ts)):
+            peak_idx = np.argmax(np.abs(label_ts[i, :]))
+            if label_ts[i, peak_idx] < 0:
+                label_ts[i, :] *= -1
+                
         info = mne.create_info(ch_names=label_names, sfreq=epochs.info['sfreq'], ch_types='misc')
 
         roi_evoked = mne.EvokedArray(np.array(label_ts), info, tmin=epochs.tmin)
