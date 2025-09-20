@@ -21,10 +21,6 @@ for sub in sub_ids:
     os.makedirs(sub_output_dir, exist_ok=True)
     
     inv_fname = os.path.join(sub_output_dir, f'{sub_bids_id}-inv.fif')
-    
-    if os.path.isfile(inv_fname):
-        print(f"  Inverse operator already exists, skipping.")
-        continue
 
     epochs_list = []
     for level in occlusion_levels:
@@ -40,9 +36,7 @@ for sub in sub_ids:
 
     noise_cov = mne.compute_covariance(all_epochs, tmax=0.0, method='auto', rank='info')
     
-    inv_op = make_inverse_operator(all_epochs.info, fwd, noise_cov, loose=0.2, depth=None)
+    inv_op = make_inverse_operator(all_epochs.info, fwd, noise_cov, fixed=True, depth=None)
     
     write_inverse_operator(inv_fname, inv_op, overwrite=True)
     print(f"  Saved {inv_fname}")
-
-print("\nInverse operator creation complete for all subjects.")
