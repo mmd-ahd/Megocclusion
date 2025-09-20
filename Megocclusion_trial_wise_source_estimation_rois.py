@@ -50,7 +50,7 @@ for sub in sub_ids:
         epochs = mne.read_epochs(epochs_fname, preload=True)
         
         stcs = mne.minimum_norm.apply_inverse_epochs(
-            epochs, inv_op, lambda2, method=method, pick_ori="normal"
+            epochs, inv_op, lambda2, method=method
         )
         
         for stc in stcs:
