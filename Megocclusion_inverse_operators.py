@@ -14,7 +14,7 @@ fwd = mne.read_forward_solution(fwd_fname)
 
 for sub in sub_ids:
     sub_bids_id = f'sub-{sub:02d}'
-    print(f"Processing {sub_bids_id}...")
+    print(f"Processing {sub_bids_id}")
 
     sub_epochs_dir = os.path.join(dataset_dir, sub_bids_id, 'meg')
     sub_output_dir = os.path.join(output_dir, sub_bids_id)
@@ -36,7 +36,7 @@ for sub in sub_ids:
 
     noise_cov = mne.compute_covariance(all_epochs, tmax=0.0, method='auto', rank='info')
     
-    inv_op = make_inverse_operator(all_epochs.info, fwd, noise_cov, fixed=True, depth=None)
+    inv_op = make_inverse_operator(all_epochs.info, fwd, noise_cov, loose=0.2, depth=None)
     
     write_inverse_operator(inv_fname, inv_op, overwrite=True)
     print(f"  Saved {inv_fname}")
