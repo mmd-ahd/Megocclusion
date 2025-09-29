@@ -11,18 +11,18 @@ BASELINE = (TMIN, 0)
 REJECT = dict(grad=6000e-13, mag=6e-12) # lenient rejection criteria
 
 EVENT_ID_MAP = {
-    '0/camel': [3],
-    '60/camel': [4],
-    '80/camel': [5],
-    '0/deer': [9],
-    '60/deer': [10],
-    '80/deer': [11],
-    '0/car': [15],
-    '60/car': [16],
-    '80/car': [17],
-    '0/motor': [21],
-    '60/motor': [22],
-    '80/motor': [23]
+    '0-camel': [3],
+    '60-camel': [4],
+    '80-camel': [5],
+    '0-deer': [9],
+    '60-deer': [10],
+    '80-deer': [11],
+    '0-car': [15],
+    '60-car': [16],
+    '80-car': [17],
+    '0-motor': [21],
+    '60-motor': [22],
+    '80-motor': [23]
 }
 
 if not os.path.exists(sample_raw_fname):
@@ -61,6 +61,6 @@ for sub in sub_ids:
             epochs = mne.EpochsArray(data_for_epochs, info, tmin=TMIN,
                                      reject=REJECT, baseline=BASELINE)
 
-            output_fname = os.path.join(sub_output_dir, f'{sub_bids_id}_task-objectrecognition-occlusion-{level.replace("/", "-")}_meg.fif')
+            output_fname = os.path.join(sub_output_dir, f'{sub_bids_id}_task-objectrecognition-occlusion-{level}_meg.fif')
             epochs.save(output_fname, overwrite=True)
             print(f'Saved: {output_fname}')
