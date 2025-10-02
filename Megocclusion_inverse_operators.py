@@ -9,7 +9,7 @@ os.makedirs(output_dir, exist_ok=True)
 sub_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15]
 occlusion_levels = ['0', '60', '80']
 
-fwd_fname = os.path.join(dataset_dir, 'fwd', 'fsaverage-meg-ico4-fwd.fif')
+fwd_fname = os.path.join(dataset_dir, 'fwd', 'fsaverage-meg-oct6-fwd.fif')
 fwd = mne.read_forward_solution(fwd_fname)
 
 for sub in sub_ids:
@@ -34,7 +34,7 @@ for sub in sub_ids:
     
     all_epochs = mne.concatenate_epochs(epochs_list)
 
-    noise_cov = mne.compute_covariance(all_epochs, tmax=0.0, method='auto', rank='info')
+    noise_cov = mne.compute_covariance(all_epochs, tmax=0.0, method='auto')
     
     inv_op = make_inverse_operator(all_epochs.info, fwd, noise_cov, loose=0.2, depth=None)
     
