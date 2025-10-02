@@ -12,7 +12,7 @@ sample_raw_fname = 'subj04NN_sess01-0_tsss.fif'
 subjects_dir = mne.datasets.sample.data_path() / 'subjects'
 os.environ['SUBJECTS_DIR'] = str(subjects_dir)
 
-src = mne.setup_source_space(subject='fsaverage', spacing='ico4',
+src = mne.setup_source_space(subject='fsaverage', spacing='oct6',
                              subjects_dir=subjects_dir, add_dist=False)
 
 model = mne.make_bem_model(subject='fsaverage', subjects_dir=subjects_dir)
