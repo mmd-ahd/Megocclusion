@@ -5,7 +5,7 @@ dataset_dir = 'Megocclusion'
 output_dir = 'fwd'
 output_path = os.path.join(dataset_dir, output_dir)
 os.makedirs(output_path, exist_ok=True)
-fwd_fname = os.path.join(output_path, 'fsaverage-meg-ico4-fwd.fif')
+fwd_fname = os.path.join(output_path, 'fsaverage-meg-oct6-fwd.fif')
 
 sample_raw_fname = 'subj04NN_sess01-0_tsss.fif'
 
